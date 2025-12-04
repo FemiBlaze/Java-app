@@ -41,7 +41,7 @@ pipeline {
                 )]) {
                     sh '''
                         echo $PASSWORD | docker login -u $USERNAME --password-stdin
-                        docker push FemiBlaze/Java-app:v1
+                        docker push femiblaze/Java-app:v1
                         docker logout
                     '''
                 }
