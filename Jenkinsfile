@@ -35,7 +35,7 @@ pipeline {
                 SNYK_TOKEN = credentials('SNYK_TOKEN')
             }
             steps {
-                dir("$WORKSPACE") {
+                dir("${WORKSPACE}") {
                     sh """
                         chmod +x mvnw
                         ./mvnw dependency:tree -DoutputType=dot
