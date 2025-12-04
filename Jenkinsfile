@@ -26,6 +26,26 @@ pipeline {
             }
         }
 
+        stage ('Synk Scan') {
+            tools {
+                jdk 'jdk17'
+                maven 'maven3'
+            }
+            environment {
+                SNYK_TOKEN = credentials('SNYK_TOKEN')
+            }
+            steps {
+                dir("$WORKSPACE") {
+                    sh """
+                        chmod +x mvnw
+                        ./mvnw dependency:tree -DoutputType=dot
+                        snyk test --all-projects --severity-threshold=medium
+                    """
+                }
+            }
+        }
+        
+            
         stage ('Build Docker Image') {
             steps {
                 sh 'docker build -t femiblaze/my-java-app:v1 .'
