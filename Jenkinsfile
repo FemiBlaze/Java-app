@@ -13,7 +13,12 @@ pipeline {
             }
         }
 
-        
+        stage ('Run Sonar Cloud Analysis')' {
+            steps {
+                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                    sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=femiblaze -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=femiblaze_java-app'
+                        
+        '
 
         stage('Build Java Application') {
             steps {
