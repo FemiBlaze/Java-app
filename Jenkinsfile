@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
+        stage ('Checkout Code') {
             steps {
                 checkout scm
             }
@@ -19,19 +19,19 @@ pipeline {
                     sh 'mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.organization=femiblaze -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=femiblaze_java-app'
                         
                 }
-        stage('Build Java Application') {
+        stage ('Build Java Application') {
             steps {
                 sh 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Build Docker Image') {
+        stage ('Build Docker Image') {
             steps {
                 sh 'docker build -t femiblaze/my-java-app:v1 .'
             }
         }
 
-        stage('Push Docker Image') {
+        stage ('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'DOCKER_LOGIN',
